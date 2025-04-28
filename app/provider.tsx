@@ -22,7 +22,7 @@ const Provider: React.FC<ProviderProps> = ({ children }) => {
     const email = usr.email!;
     // Try to find existing user
     const { data: existingUsers, error: selectError } = await supabase
-      .from<UserDetails>('Users')
+      .from('Users')
       .select('*')
       .eq('email', email)
       .maybeSingle();
@@ -31,10 +31,12 @@ const Provider: React.FC<ProviderProps> = ({ children }) => {
       return;
     }
 
+    console.log(`Existing user: ${existingUsers}`)
+
     if (!existingUsers) {
       // Insert new user
       const { data: inserted, error: insertError } = await supabase
-        .from<UserDetails>('Users')
+        .from('Users')
         .insert([
           {
             name: usr.user_metadata.name,
@@ -43,6 +45,8 @@ const Provider: React.FC<ProviderProps> = ({ children }) => {
           },
         ])
         .single();
+      
+      console.log(`New user: ${inserted}`)
       if (insertError) {
         console.error('Error inserting user', insertError);
         return;

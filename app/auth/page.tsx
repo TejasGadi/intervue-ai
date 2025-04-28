@@ -9,7 +9,7 @@ export default function Login(): React.JSX.Element {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'http://localhost:3000/callback', 
+        redirectTo: 'http://localhost:3000/',
       }
     })
     if (error) {
@@ -27,20 +27,13 @@ export default function Login(): React.JSX.Element {
           height={100}
         />  
         <div className="flex flex-col items-center mt-6">
-          <Image
-            src="/file.svg"
-            alt="User signing in illustration"
-            width={400}
-            height={250}
-            className="rounded-2xl p-4"
-          />
           <h2 className="mt-5 text-2xl font-bold text-center">
-            Welcome to INTERVUE-AI 
+            Welcome to INTERVUE-AI
           </h2>
           <p className="mt-2 text-gray-500">Sign in with Google</p>
 
           <Button
-            className="mt-7 w-full"
+            className="mt-7 w-full cursor-pointer"
             onClick={signInWithGoogle}
             aria-label="Login with Google"
           >
