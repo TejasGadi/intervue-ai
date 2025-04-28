@@ -1,20 +1,24 @@
-FROM node:18-alpine as base
+# Use Node.js 23 on Alpine
+FROM node:23-alpine
+
+# Support native modules
+RUN apk add --no-cache libc6-compat
+
+# Create app directory
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 
-FROM base as builder
+# Copy package manifests & install all deps (dev+prod)
+COPY package.json package-lock.json tsconfig.json next.config.ts ./
+RUN npm ci
+
+# Copy source code
 COPY . .
-RUN npm run build
 
-FROM base as production
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/public ./public
-CMD ["npm", "start"]
+# Silence Next.js telemetry
+ENV NEXT_TELEMETRY_DISABLED=1
 
-FROM base as dev
-ENV NODE_ENV=development
-COPY . .
+# Expose the dev server port
 EXPOSE 3000
+
+# Default to the Next.js dev command
 CMD ["npm", "run", "dev"]
