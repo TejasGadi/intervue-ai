@@ -21,7 +21,7 @@ export default function Login(): React.JSX.Element {
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="flex flex-col items-center border rounded-2xl p-8">
         <Image
-          src="/file.svg"
+          src="/intervue-ai-logo.png"
           alt="Illustration of login process"
           width={180}
           height={100}

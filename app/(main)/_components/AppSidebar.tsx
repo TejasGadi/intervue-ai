@@ -26,7 +26,7 @@ const AppSidebar = () => {
   return (
       <Sidebar>
         <SidebarHeader className='flex items-center mt-5'>
-          <Image src={'/next.svg'} alt='App Logo' height={100} width={200} className='w-[150px]'/>
+          <Image src={'/intervue-ai-logo.png'} alt='App Logo' height={100} width={200} className='w-[200px]'/>
           <Button className='w-full m-5 cursor-pointer'>
             <Plus/>
             Create New Interview
