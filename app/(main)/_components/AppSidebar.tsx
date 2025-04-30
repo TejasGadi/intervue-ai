@@ -14,7 +14,7 @@ import {
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
-import { SidebarOptions } from '@/services/Contants'
+import { SidebarOptions } from '@/services/Constants'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
   

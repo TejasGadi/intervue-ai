@@ -7,9 +7,11 @@ RUN apk add --no-cache libc6-compat
 # Create app directory
 WORKDIR /app
 
-# Copy package manifests & install all deps (dev+prod)
-COPY package.json package-lock.json tsconfig.json next.config.ts ./
-RUN npm ci
+# Copy package manifests 
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm install
 
 # Copy source code
 COPY . .
