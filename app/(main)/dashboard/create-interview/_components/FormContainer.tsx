@@ -14,10 +14,11 @@ import { ArrowRight } from 'lucide-react'
 import { InterviewType } from '@/services/Constants'
 
 interface FormContainerProps {
-  onHandleInputChange: (field: string, value: any) => void
+    onHandleInputChange: (field: string, value: any) => void
+    GoToNext: ( field: void ) => void
 }
 
-const FormContainer: React.FC<FormContainerProps> = ({ onHandleInputChange }) => {
+const FormContainer: React.FC<FormContainerProps> = ({ onHandleInputChange, GoToNext }) => {
   const [interviewType, setInterviewType] = useState<string[]>([])
 
   useEffect(() => {
@@ -99,7 +100,7 @@ const FormContainer: React.FC<FormContainerProps> = ({ onHandleInputChange }) =>
       </div>
 
       <div className='mt-7 flex justify-end'>
-        <Button onClick={() => {}}>
+        <Button onClick={() => GoToNext()}>
           Generate Questions <ArrowRight />
         </Button>
       </div>
