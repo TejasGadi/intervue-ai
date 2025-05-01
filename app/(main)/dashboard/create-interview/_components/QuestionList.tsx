@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import QuestionListContainer from './QuestionListContainer'
 import { supabase } from '@/services/supbaseClient'
 import { v4 as uuidv4 } from 'uuid';
+import { saveInterview } from '@/app/actions/interview_crud_operations'
 
 interface QuestionListProps {
     formData?: {
@@ -14,6 +15,15 @@ interface QuestionListProps {
         type: string[]
     }
 }
+
+interface InterviewInput {
+    interview_id: string
+    jobPosition: string
+    jobDescription: string
+    interviewDuration: string
+    type: string[]
+    question_list: any[]
+  }
 
   const QuestionList: React.FC<QuestionListProps> = ({formData}) => {
     const [loading, setLoading] = useState(false)
@@ -54,29 +64,32 @@ interface QuestionListProps {
         fetchQuestions()
 
     }, [formData])
-
-    const onFinish = async () =>{
-        setSaveLoading(true)
-        const interview_id = uuidv4()
-        try{
-            const { data, error } = await supabase
-            .from('interviews')
-            .insert([
-                { 
-                    ...formData, 
-                    questionList: questionList,
-                    interview_id: interview_id
-                 },
-            ])
-            .select()
-            console.log(data)
-        } catch(e){
-            console.log("Query Error: ", e)
-        }finally{
-            setSaveLoading(false)
-        }
     
+    const onFinish = async () => {
+    setSaveLoading(true)
+    const interview_id = uuidv4()
+
+    // Prepare the data
+    const interviewData: InterviewInput = {
+        interview_id,
+        jobPosition: formData?.jobPosition ?? '',
+        jobDescription: formData?.jobDescription ?? '',
+        interviewDuration: formData?.interviewDuration ?? '',
+        type: formData?.type ?? [],
+        question_list: questionList,
     }
+
+    try {
+        // Call the server action to save the interview data
+        await saveInterview(interviewData)
+        console.log('Interview saved successfully')
+    } catch (error) {
+        console.error('Failed to save interview:', error)
+    } finally {
+        setSaveLoading(false)
+    }
+    }
+
   return (
     <div>
         {
