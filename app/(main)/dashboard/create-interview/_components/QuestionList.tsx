@@ -7,14 +7,15 @@ import { supabase } from '@/services/supbaseClient'
 import { v4 as uuidv4 } from 'uuid';
 import { saveInterview } from '@/app/actions/interview_crud_operations'
 
-interface QuestionListProps {
-    formData?: {
-        jobPosition: string
-        jobDescription: string
-        interviewDuration: string
-        type: string[]
-    }
-}
+interface QuestionListContainerProps {
+    formData: {
+      jobPosition: string;
+      jobDescription: string;
+      interviewDuration: string;
+      type: string[];
+    };
+    onCreateLink: (interview_id: string) => void;
+  }
 
 interface InterviewInput {
     interview_id: string
@@ -24,8 +25,9 @@ interface InterviewInput {
     type: string[]
     question_list: any[]
   }
+  
 
-  const QuestionList: React.FC<QuestionListProps> = ({formData}) => {
+  const QuestionList: React.FC<QuestionListContainerProps> = ({formData, onCreateLink}) => {
     const [loading, setLoading] = useState(false)
     const [questionList, setQuestionList] = useState([])
     const [saveLoading, setSaveLoading] = useState(false)
@@ -87,6 +89,7 @@ interface InterviewInput {
         console.error('Failed to save interview:', error)
     } finally {
         setSaveLoading(false)
+        onCreateLink(interview_id)
     }
     }
 
@@ -106,14 +109,14 @@ interface InterviewInput {
         {
             questionList?.length > 0 &&
             <div>
-                <QuestionListContainer questionList={questionList} />
+                <QuestionListContainer questionList={questionList} onCreateLink={onCreateLink} />
             </div>
         }
 
         <div className='flex justify-end mt-10'>
-            <Button onClick={() => onFinish()} disabled={saveLoading}>  
+            <Button onClick={() => onFinish()} disabled={saveLoading} className='cursor-pointer' >  
                 {saveLoading && <Loader2Icon className='animate-spin'/>}
-                Finish
+                Create Interview Link and Finish
             </Button>
         </div>
     </div>
