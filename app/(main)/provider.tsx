@@ -8,7 +8,7 @@ const DashboardProvider = ({children}: any) => {
     <SidebarProvider>
         <AppSidebar/>
         <div className='w-full bg-gray-100'>
-            {/* <SidebarTrigger/> */}
+            <SidebarTrigger className='cursor-pointer p-2 bg-gray-200 ml-5 mt-5'/>
             <WelcomeContainer/>        
             {children}
         </div>
