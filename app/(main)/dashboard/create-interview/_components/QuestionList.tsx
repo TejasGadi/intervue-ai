@@ -17,7 +17,7 @@ interface QuestionListProps {
 
   const QuestionList: React.FC<QuestionListProps> = ({formData}) => {
     const [loading, setLoading] = useState(false)
-    const [questionList, setQuestionList] = useState()
+    const [questionList, setQuestionList] = useState([])
     const [saveLoading, setSaveLoading] = useState(false)
 
     useEffect(() =>{
@@ -30,7 +30,8 @@ interface QuestionListProps {
                 // setQuestions(res.data.content)    // <-- store questions in state
                 if (res.status !== 200) {
                     // handle the error payload in res.data.error
-                    setError(res.data.error || "Unknown error");
+                    console.log(`Error: ${res}`)
+                    // setError(res.data.error || "Unknown error");
                 } else {
                     console.log(res)
                     const raw_content = res.data.content;
@@ -41,7 +42,7 @@ interface QuestionListProps {
                     )?.interviewQuestions;
 
                     setQuestionList(filtered_content)
-                    console.log(filtered_content)
+                    // console.log(filtered_content)
                   }
             } catch (e) {
                 console.error(e)

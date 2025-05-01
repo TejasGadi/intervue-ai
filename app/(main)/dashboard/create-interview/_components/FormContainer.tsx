@@ -84,12 +84,11 @@ const FormContainer: React.FC<FormContainerProps> = ({ onHandleInputChange, GoTo
           {InterviewType.map((type, idx) => (
             <div
               key={idx}
-              className='
+              className={`
                 flex items-center cursor-pointer gap-2 p-1 px-2
-                bg-black text-white border border-gray-300 rounded-2xl
-                hover:bg-white hover:text-black hover:border-black
-                transition-all duration-200
-              '
+               border border-gray-300 rounded-2xl hover:border-black
+                transition-all duration-200 ${interviewType.includes(type.title) ? "bg-white text-black hover:border-black" : "bg-black text-white hover:bg-gray-400"}
+              `}
               onClick={() => AddInterviewType(type.title)}
             >
               <type.icon className='h-4 w-4' />

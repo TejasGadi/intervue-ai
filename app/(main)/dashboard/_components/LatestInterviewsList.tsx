@@ -1,10 +1,12 @@
 "use client"
 import { Button } from '@/components/ui/button'
 import { Camera, Video } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const LatestInterviewsList = () => {
     const [interviewsList, setInterviewsList] = React.useState([])
+    const router = useRouter()
   return (
       <div className="my-5">
         <h2 className="font-bold text-2xl mb-3">
@@ -18,7 +20,7 @@ const LatestInterviewsList = () => {
                     <h2 className="">
                         You don't have any interview created!
                     </h2>
-                    <Button>
+                    <Button className='cursor-pointer' onClick={() => router.push('/dashboard/create-interview')}>
                         Create New Interview
                     </Button>
                 </div>

@@ -12,14 +12,15 @@ export async function POST(req: Request) {
     .replace("{{type}}", Array.isArray(type) ? type.join(", ") : String(type));
 
   const openai = new OpenAI({
-    baseURL: "https://openrouter.ai/api/v1",
-    apiKey: process.env.OPENROUTER_API_KEY,
+    // baseURL: "https://openrouter.ai/api/v1",
+    // apiKey: process.env.OPENROUTER_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY,
   });
 
   let completion;
   try {
     completion = await openai.chat.completions.create({
-      model: "google/gemini-flash-1.5-8b-exp",
+      model: "gpt-4o-mini",
       messages: [{ role: "user", content: FINAL_PROMPT }],
     });
   } catch (e) {
