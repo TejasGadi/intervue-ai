@@ -43,3 +43,66 @@ export async function saveInterview(data: InterviewInput) {
     throw new Error('Unknown error occurred while saving the interview')
   }
 }
+
+
+// Fetch Interview Entry by interview_id
+export async function getSelectedInterviewDetails(interview_id: string) {
+  if (!interview_id) {
+    throw new Error('Missing interview_id')
+  }
+
+  try {
+    const interview = await prisma.interview.findUnique({
+      where: {
+        interview_id,
+      },
+      select:{
+        jobPosition: true,
+        jobDescription: true,
+        interviewDuration: true, 
+        type: true
+      }
+    })
+
+    if (!interview) {
+      throw new Error('Interview not found')
+    }
+
+    console.log(`interview details: ${interview}`)
+
+    return interview
+  } catch (error) {
+    console.error('❌ Failed to fetch interview details:', error)
+    // throw new Error('Unknown error occurred while fetching interview details')
+    return null
+  }
+}
+
+
+// Fetch Interview Entry by interview_id
+export async function getInterviewDetails(interview_id: string) {
+  if (!interview_id) {
+    throw new Error('Missing interview_id')
+  }
+
+  try {
+    const interview = await prisma.interview.findUnique({
+      where: {
+        interview_id,
+      },
+    })
+
+    if (!interview) {
+      throw new Error('Interview not found')
+    }
+
+    console.log(`interview details: ${interview}`)
+
+    return interview
+  } catch (error) {
+    console.error('❌ Failed to fetch interview details:', error)
+    // throw new Error('Unknown error occurred while fetching interview details')
+    return null
+  }
+}
+
