@@ -38,6 +38,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+
+# Prisma query engine binaries — they’re platform‑specific and rebuilt on install
+/lib/generated/prisma/libquery_engine-*.so.node
+/lib/generated/prisma/query-engine-*.exe
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

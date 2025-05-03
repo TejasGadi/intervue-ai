@@ -16,6 +16,9 @@ RUN npm install
 # Copy source code
 COPY . .
 
+# Re-generate Prisma Client with correct targets inside the container
+RUN npx prisma generate
+
 # Silence Next.js telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 
