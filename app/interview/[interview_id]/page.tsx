@@ -22,15 +22,19 @@ const Interview = () => {
  
   const [userName, setUserName] = useState<string>("")
   const [loading, setLoading] = useState(false)
+  const [userEmail, setUserEmail] = useState<string>("")
   const {interviewInfo, setInterviewInfo} = useContext(InterviewDataContext)
   const router = useRouter()
 
   const onJoinInterview=async()=>{
     setLoading(true)
     const interview = await getInterviewDetails(interview_id?.toString()!)
+    console.log(interview)
     setInterviewInfo({
       userName: userName,
-      interviewData: interview?.question_list
+      userEmail: userEmail,
+      interviewData: interview?.question_list,
+      jobPosition: interviewData?.jobPosition,
     })
     router.push('/interview'+ '/' + interview_id + '/start')
     setLoading(false)
@@ -70,6 +74,11 @@ const Interview = () => {
         <div className="w-full">
           <h2 className="">Enter your full name</h2>
           <Input placeholder='e.g. John Smith' onChange={(event)=>setUserName(event.target.value)} />
+        </div>
+
+        <div className="w-full">
+          <h2 className="">Enter your email</h2>
+          <Input placeholder='e.g. john@gmail.com' onChange={(event)=>setUserEmail(event.target.value)} />
         </div>
 
         <div className="p-3 bg-blue-200 flex gap-4 rounded-md mt-7">

@@ -1,5 +1,5 @@
 # Node modules and build outputs
-node_modules
+# node_modules
 .next
 out
 
@@ -25,9 +25,14 @@ docker-compose.yml
 .env.production
 
 # IDE and editor directories/files
-.vscode
+.vscode/
 .idea
 *.swp
+
+# Prisma artifacts (regenerate inside container)
+prisma/migrations/
+lib/generated/prisma/*.so.node
+lib/generated/prisma/query-engine-*
 
 # Miscellaneous
 README.md
