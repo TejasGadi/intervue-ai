@@ -5,11 +5,12 @@ import { Mic, Phone, Timer } from 'lucide-react'
 import Image from 'next/image'
 import React, { useState, useContext, useEffect, useMemo } from 'react'
 import Vapi from "@vapi-ai/web";
-import { start } from 'repl'
+import axios from 'axios'
 import { getAssistantOptions } from '@/services/Constants'
 import AlterConfirmation from './_components/AlertConfirmation'
 import { toast } from "sonner"
 import TimerComponent from './_components/TimeComponent'
+import {prisma} from '@/lib/prisma'
 
 const StartInterview = () => {
     const {interviewInfo, setInterviewInfo} = useContext(InterviewDataContext)
@@ -19,6 +20,7 @@ const StartInterview = () => {
       );
     const [activeUser, setActiveUser] = useState(false)
     const [isRunning, setIsRunning] = useState(false)
+    const [conversation, setConversation] = useState<any>()
 
     const stopInterview = () => {
         setIsRunning(false)
@@ -34,7 +36,33 @@ const StartInterview = () => {
 
         const assistantOptions = getAssistantOptions({ userName, jobPosition, questionList });
         vapi.start(assistantOptions);
+
     }, [interviewInfo, vapi])
+
+
+    const generateFeedback = async() => {
+        try {
+            const payload = {
+                conversation: conversation,
+                userName: interviewInfo.userName,
+                userEmail: interviewInfo.userEmail,
+                interview_id: interviewInfo.interview_id,
+                recommended: false,
+            }
+            const res = await axios.post('/api/ai-feedback', payload)
+
+            // setQuestions(res.data.content)    // <-- store questions in state
+            if (res.status === 200) {
+                console.log('Feedback saved:', res.data.saved)
+                // setError(res.data.error || "Unknown error");
+            } else {
+                // handle the error payload in res.data.error
+                console.log(`Error: ${res.data.error}`)                
+            }
+        } catch (e) {
+            console.error('Request Failed:', e)
+        }
+    }
 
     // subscribe to vapi events and cleanup
     useEffect(() =>{
@@ -47,17 +75,23 @@ const StartInterview = () => {
         const onCallEnd = () => {
             toast('Call ended')
             setIsRunning(false)
+            generateFeedback()
         }
-        const onMessage = (msg: any) => toast('Message received...')
+        const onMessage = (msg: any) => {
+            setConversation(msg?.conversation)
+            toast('Message received...')
+        }
         const onError = (payload: any) =>{
             console.error("vapi error:", payload)
             if (payload.error?.type === 'ejected') {
                 toast('The meeting has been ended.')
+                generateFeedback()
                 setIsRunning(false)
             }else{
                 toast(`Error: ${payload.errorMsg}`);
             }
         };
+
 
         vapi.on('call-start', onCallStart);
         vapi.on('speech-start', onSpeechStart);

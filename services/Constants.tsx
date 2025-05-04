@@ -141,7 +141,7 @@ Key Guidelines:
   },
 });
 
-export const getFeedbackPrompt = `
+export const FEEDBACK_PROMPT = `
 {{conversation}}
 
 Depends on this Interview Conversation between assitant and user, 
@@ -182,4 +182,4 @@ for hire or not with msg. Give me response in JSON format
 
 }
 
-`;
+`

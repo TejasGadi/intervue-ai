@@ -13,17 +13,21 @@ COPY package.json package-lock.json ./
 # Install dependencies
 RUN npm install
 
+# 4. Copy Prisma schema and generate client
+COPY prisma ./prisma
+RUN npx prisma generate || true
+
 # Copy source code
 COPY . .
 
 # Re-generate Prisma Client with correct targets inside the container
-RUN npx prisma generate
+RUN npx prisma generate || true
 
 # Silence Next.js telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Expose the dev server port
-EXPOSE 3000
+EXPOSE 3000 5555
 
 # Default to the Next.js dev command
 CMD ["npm", "run", "dev"]
