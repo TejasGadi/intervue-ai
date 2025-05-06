@@ -1,7 +1,7 @@
 "use client"
 
 import { InterviewDataContext } from '@/context/InterviewDataContext'
-import { Mic, Phone, Timer } from 'lucide-react'
+import { Loader2Icon, Mic, Phone, Timer } from 'lucide-react'
 import Image from 'next/image'
 import React, { useState, useContext, useEffect, useMemo } from 'react'
 import Vapi from "@vapi-ai/web";
@@ -10,7 +10,7 @@ import { getAssistantOptions } from '@/services/Constants'
 import AlterConfirmation from './_components/AlertConfirmation'
 import { toast } from "sonner"
 import TimerComponent from './_components/TimeComponent'
-import {prisma} from '@/lib/prisma'
+import { useRouter } from 'next/navigation'
 
 const StartInterview = () => {
     const {interviewInfo, setInterviewInfo} = useContext(InterviewDataContext)
@@ -21,24 +21,9 @@ const StartInterview = () => {
     const [activeUser, setActiveUser] = useState(false)
     const [isRunning, setIsRunning] = useState(false)
     const [conversation, setConversation] = useState<any>()
+    const [loading, setLoading] = useState(false)
 
-    const stopInterview = () => {
-        setIsRunning(false)
-        vapi.stop()
-    }
-    
-    // start call when interviewInfo is available
-    useEffect(() => {
-        if (!interviewInfo) return;
-        const userName = interviewInfo?.userName ;
-        const jobPosition =  interviewInfo?.jobPosition;
-        const questionList = interviewInfo.interviewData?.map(item => item.question) || [];
-
-        const assistantOptions = getAssistantOptions({ userName, jobPosition, questionList });
-        vapi.start(assistantOptions);
-
-    }, [interviewInfo, vapi])
-
+    const router = useRouter()
 
     const generateFeedback = async() => {
         try {
@@ -59,10 +44,48 @@ const StartInterview = () => {
                 // handle the error payload in res.data.error
                 console.log(`Error: ${res.data.error}`)                
             }
+            router.replace('/interview/' + interviewInfo.interview_id + '/completed')
+            setLoading(false)
         } catch (e) {
             console.error('Request Failed:', e)
         }
     }
+
+    const stopInterview = async () => {
+        if (loading || !isRunning) return;            // guard against double‐click
+        setLoading(true);                 // show spinner
+        setIsRunning(false);              // stop the timer animation
+        toast('Call ended. Saving feedback…');
+        vapi.stop();                      // forcibly tear down the call
+    
+        try {
+          await generateFeedback();       // push your conversation + feedback
+          router.replace(`/interview/${interviewInfo.interview_id}/completed`);
+        } catch (e) {
+          console.error('Could not save feedback:', e);
+          toast.error('Something went wrong saving feedback.');
+        } finally {
+          setLoading(false);
+        }
+    }
+    
+    // start call when interviewInfo is available
+    useEffect(() => {
+        if (!interviewInfo) return;
+        const userName = interviewInfo?.userName ;
+        const jobPosition =  interviewInfo?.jobPosition;
+        const questionList = interviewInfo.interviewData?.map(item => item.question) || [];
+
+        const assistantOptions = getAssistantOptions({ userName, jobPosition, questionList });
+        vapi.start(assistantOptions)
+        .then(call => console.log('Call object:', call))
+        .catch(err => {
+            console.error('Failed to start Vapi:', err);
+            toast.error('Unable to start call');
+          });
+
+    }, [interviewInfo, vapi])
+
 
     // subscribe to vapi events and cleanup
     useEffect(() =>{
@@ -78,8 +101,10 @@ const StartInterview = () => {
             generateFeedback()
         }
         const onMessage = (msg: any) => {
-            setConversation(msg?.conversation)
-            toast('Message received...')
+            if (msg?.conversation){
+                console.log('Conversation string', msg.conversation);
+                setConversation(msg.conversation)
+            }
         }
         const onError = (payload: any) =>{
             console.error("vapi error:", payload)
@@ -145,10 +170,11 @@ const StartInterview = () => {
 
         <div className="flex items-center gap-5 justify-center mt-7">
             <Mic className='h-12 w-12 p-3 bg-gray-500 text-white rounded-full cursor-pointer hover:scale-110'/>
-            <AlterConfirmation stopInterview={() => stopInterview()}>
-                <Phone className='h-12 w-12 p-3 rounded-full text-white bg-red-500 cursor-pointer hover:scale-110'
-                />
-            </AlterConfirmation>
+            {/* <AlterConfirmation stopInterview={() => stopInterview()}> */}
+                {!loading ? <Phone className='h-12 w-12 p-3 rounded-full text-white bg-red-500 cursor-pointer hover:scale-110'
+                onClick={() => stopInterview()}
+                /> : <Loader2Icon className='animate-spin' />}
+            {/* </AlterConfirmation> */}
                 
         </div>
 

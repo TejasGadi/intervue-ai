@@ -5,8 +5,18 @@ import { InterviewService } from "@/lib/services/InterviewService";
 import { FeedbackDto } from "@/lib/dtos/FeedbackDto";
 
 export async function POST(req : Request) {
-    const {conversation, userName, userEmail, interview_id, recommended} = await req.json()
-    const FINAL_PROMPT = FEEDBACK_PROMPT.replace('{{conversation}}', JSON.stringify(conversation))
+
+    if (req.method !== "POST") {
+        return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
+    }
+
+    const {conversation, userName, userEmail, interview_id, recommended = false} = await req.json()
+    
+    const conversationStr = typeof conversation === 'string'
+    ? conversation
+    : JSON.stringify(conversation);
+
+    const FINAL_PROMPT = FEEDBACK_PROMPT.replace('{{conversation}}', conversationStr)
     const openai = new OpenAI({
         // baseURL: "https://openrouter.ai/api/v1",
         // apiKey: process.env.OPENROUTER_API_KEY,
@@ -31,10 +41,12 @@ export async function POST(req : Request) {
     const cleaned = raw.replace(/^["']*```json\s*/, '')
                     .replace(/\s*```["']*$/, '')
                     .replace(/\\n/g, '\n')
+    console.log("Cleaned JSON:", cleaned);    
     
     let feedbackJson: any;
     try {
         feedbackJson = JSON.parse(cleaned);
+        console.log("Parsed JSON:", feedbackJson);
     } catch (error) {
         console.error("Parse error", error)
         return NextResponse.json({ error: "Failed to parse AI response" }, { status: 502 });    

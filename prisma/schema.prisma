@@ -25,8 +25,8 @@ model Interview {
   createdAt        DateTime @default(now())
 }
 
-model interviewFeedBack {
-  id              String    @id default(uuid())
+model interviewFeedback {
+  id              String    @id @default(uuid())
   created_at      DateTime  @default(now())
   userName        String
   userEmail       String

@@ -17,6 +17,10 @@ RUN npm install
 COPY prisma ./prisma
 RUN npx prisma generate || true
 
+
+# Apply Prisma migrations to the database
+RUN npx prisma migrate deploy || true
+
 # Copy source code
 COPY . .
 

@@ -35,6 +35,7 @@ const Interview = () => {
       userEmail: userEmail,
       interviewData: interview?.question_list,
       jobPosition: interviewData?.jobPosition,
+      interview_id: interview_id?.toString(),
     })
     router.push('/interview'+ '/' + interview_id + '/start')
     setLoading(false)
