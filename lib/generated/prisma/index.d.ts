@@ -18,6 +18,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type Interview = $Result.DefaultSelection<Prisma.$InterviewPayload>
+/**
+ * Model interviewFeedback
+ * 
+ */
+export type interviewFeedback = $Result.DefaultSelection<Prisma.$interviewFeedbackPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -38,7 +43,6 @@ export class PrismaClient<
   U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
-  interviewFeedback: any;
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
 
     /**
@@ -154,6 +158,16 @@ export class PrismaClient<
     * ```
     */
   get interview(): Prisma.InterviewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.interviewFeedback`: Exposes CRUD operations for the **interviewFeedback** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InterviewFeedbacks
+    * const interviewFeedbacks = await prisma.interviewFeedback.findMany()
+    * ```
+    */
+  get interviewFeedback(): Prisma.interviewFeedbackDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -594,7 +608,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Interview: 'Interview'
+    Interview: 'Interview',
+    interviewFeedback: 'interviewFeedback'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -613,7 +628,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "interview"
+      modelProps: "interview" | "interviewFeedback"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -688,6 +703,80 @@ export namespace Prisma {
           count: {
             args: Prisma.InterviewCountArgs<ExtArgs>
             result: $Utils.Optional<InterviewCountAggregateOutputType> | number
+          }
+        }
+      }
+      interviewFeedback: {
+        payload: Prisma.$interviewFeedbackPayload<ExtArgs>
+        fields: Prisma.interviewFeedbackFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.interviewFeedbackFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.interviewFeedbackFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload>
+          }
+          findFirst: {
+            args: Prisma.interviewFeedbackFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.interviewFeedbackFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload>
+          }
+          findMany: {
+            args: Prisma.interviewFeedbackFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload>[]
+          }
+          create: {
+            args: Prisma.interviewFeedbackCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload>
+          }
+          createMany: {
+            args: Prisma.interviewFeedbackCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.interviewFeedbackCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload>[]
+          }
+          delete: {
+            args: Prisma.interviewFeedbackDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload>
+          }
+          update: {
+            args: Prisma.interviewFeedbackUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload>
+          }
+          deleteMany: {
+            args: Prisma.interviewFeedbackDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.interviewFeedbackUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.interviewFeedbackUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload>[]
+          }
+          upsert: {
+            args: Prisma.interviewFeedbackUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$interviewFeedbackPayload>
+          }
+          aggregate: {
+            args: Prisma.InterviewFeedbackAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInterviewFeedback>
+          }
+          groupBy: {
+            args: Prisma.interviewFeedbackGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InterviewFeedbackGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.interviewFeedbackCountArgs<ExtArgs>
+            result: $Utils.Optional<InterviewFeedbackCountAggregateOutputType> | number
           }
         }
       }
@@ -776,6 +865,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     interview?: InterviewOmit
+    interviewFeedback?: interviewFeedbackOmit
   }
 
   /* Types for Logging */
@@ -1897,6 +1987,1023 @@ export namespace Prisma {
 
 
   /**
+   * Model interviewFeedback
+   */
+
+  export type AggregateInterviewFeedback = {
+    _count: InterviewFeedbackCountAggregateOutputType | null
+    _min: InterviewFeedbackMinAggregateOutputType | null
+    _max: InterviewFeedbackMaxAggregateOutputType | null
+  }
+
+  export type InterviewFeedbackMinAggregateOutputType = {
+    id: string | null
+    created_at: Date | null
+    userName: string | null
+    userEmail: string | null
+    interview_id: string | null
+    recommended: boolean | null
+  }
+
+  export type InterviewFeedbackMaxAggregateOutputType = {
+    id: string | null
+    created_at: Date | null
+    userName: string | null
+    userEmail: string | null
+    interview_id: string | null
+    recommended: boolean | null
+  }
+
+  export type InterviewFeedbackCountAggregateOutputType = {
+    id: number
+    created_at: number
+    userName: number
+    userEmail: number
+    interview_id: number
+    feedback: number
+    recommended: number
+    _all: number
+  }
+
+
+  export type InterviewFeedbackMinAggregateInputType = {
+    id?: true
+    created_at?: true
+    userName?: true
+    userEmail?: true
+    interview_id?: true
+    recommended?: true
+  }
+
+  export type InterviewFeedbackMaxAggregateInputType = {
+    id?: true
+    created_at?: true
+    userName?: true
+    userEmail?: true
+    interview_id?: true
+    recommended?: true
+  }
+
+  export type InterviewFeedbackCountAggregateInputType = {
+    id?: true
+    created_at?: true
+    userName?: true
+    userEmail?: true
+    interview_id?: true
+    feedback?: true
+    recommended?: true
+    _all?: true
+  }
+
+  export type InterviewFeedbackAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which interviewFeedback to aggregate.
+     */
+    where?: interviewFeedbackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of interviewFeedbacks to fetch.
+     */
+    orderBy?: interviewFeedbackOrderByWithRelationInput | interviewFeedbackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: interviewFeedbackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` interviewFeedbacks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` interviewFeedbacks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned interviewFeedbacks
+    **/
+    _count?: true | InterviewFeedbackCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InterviewFeedbackMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InterviewFeedbackMaxAggregateInputType
+  }
+
+  export type GetInterviewFeedbackAggregateType<T extends InterviewFeedbackAggregateArgs> = {
+        [P in keyof T & keyof AggregateInterviewFeedback]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInterviewFeedback[P]>
+      : GetScalarType<T[P], AggregateInterviewFeedback[P]>
+  }
+
+
+
+
+  export type interviewFeedbackGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: interviewFeedbackWhereInput
+    orderBy?: interviewFeedbackOrderByWithAggregationInput | interviewFeedbackOrderByWithAggregationInput[]
+    by: InterviewFeedbackScalarFieldEnum[] | InterviewFeedbackScalarFieldEnum
+    having?: interviewFeedbackScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InterviewFeedbackCountAggregateInputType | true
+    _min?: InterviewFeedbackMinAggregateInputType
+    _max?: InterviewFeedbackMaxAggregateInputType
+  }
+
+  export type InterviewFeedbackGroupByOutputType = {
+    id: string
+    created_at: Date
+    userName: string
+    userEmail: string
+    interview_id: string
+    feedback: JsonValue
+    recommended: boolean
+    _count: InterviewFeedbackCountAggregateOutputType | null
+    _min: InterviewFeedbackMinAggregateOutputType | null
+    _max: InterviewFeedbackMaxAggregateOutputType | null
+  }
+
+  type GetInterviewFeedbackGroupByPayload<T extends interviewFeedbackGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InterviewFeedbackGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InterviewFeedbackGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InterviewFeedbackGroupByOutputType[P]>
+            : GetScalarType<T[P], InterviewFeedbackGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type interviewFeedbackSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    userName?: boolean
+    userEmail?: boolean
+    interview_id?: boolean
+    feedback?: boolean
+    recommended?: boolean
+  }, ExtArgs["result"]["interviewFeedback"]>
+
+  export type interviewFeedbackSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    userName?: boolean
+    userEmail?: boolean
+    interview_id?: boolean
+    feedback?: boolean
+    recommended?: boolean
+  }, ExtArgs["result"]["interviewFeedback"]>
+
+  export type interviewFeedbackSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    userName?: boolean
+    userEmail?: boolean
+    interview_id?: boolean
+    feedback?: boolean
+    recommended?: boolean
+  }, ExtArgs["result"]["interviewFeedback"]>
+
+  export type interviewFeedbackSelectScalar = {
+    id?: boolean
+    created_at?: boolean
+    userName?: boolean
+    userEmail?: boolean
+    interview_id?: boolean
+    feedback?: boolean
+    recommended?: boolean
+  }
+
+  export type interviewFeedbackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "userName" | "userEmail" | "interview_id" | "feedback" | "recommended", ExtArgs["result"]["interviewFeedback"]>
+
+  export type $interviewFeedbackPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "interviewFeedback"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      created_at: Date
+      userName: string
+      userEmail: string
+      interview_id: string
+      feedback: Prisma.JsonValue
+      recommended: boolean
+    }, ExtArgs["result"]["interviewFeedback"]>
+    composites: {}
+  }
+
+  type interviewFeedbackGetPayload<S extends boolean | null | undefined | interviewFeedbackDefaultArgs> = $Result.GetResult<Prisma.$interviewFeedbackPayload, S>
+
+  type interviewFeedbackCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<interviewFeedbackFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InterviewFeedbackCountAggregateInputType | true
+    }
+
+  export interface interviewFeedbackDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['interviewFeedback'], meta: { name: 'interviewFeedback' } }
+    /**
+     * Find zero or one InterviewFeedback that matches the filter.
+     * @param {interviewFeedbackFindUniqueArgs} args - Arguments to find a InterviewFeedback
+     * @example
+     * // Get one InterviewFeedback
+     * const interviewFeedback = await prisma.interviewFeedback.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends interviewFeedbackFindUniqueArgs>(args: SelectSubset<T, interviewFeedbackFindUniqueArgs<ExtArgs>>): Prisma__interviewFeedbackClient<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InterviewFeedback that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {interviewFeedbackFindUniqueOrThrowArgs} args - Arguments to find a InterviewFeedback
+     * @example
+     * // Get one InterviewFeedback
+     * const interviewFeedback = await prisma.interviewFeedback.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends interviewFeedbackFindUniqueOrThrowArgs>(args: SelectSubset<T, interviewFeedbackFindUniqueOrThrowArgs<ExtArgs>>): Prisma__interviewFeedbackClient<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InterviewFeedback that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {interviewFeedbackFindFirstArgs} args - Arguments to find a InterviewFeedback
+     * @example
+     * // Get one InterviewFeedback
+     * const interviewFeedback = await prisma.interviewFeedback.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends interviewFeedbackFindFirstArgs>(args?: SelectSubset<T, interviewFeedbackFindFirstArgs<ExtArgs>>): Prisma__interviewFeedbackClient<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InterviewFeedback that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {interviewFeedbackFindFirstOrThrowArgs} args - Arguments to find a InterviewFeedback
+     * @example
+     * // Get one InterviewFeedback
+     * const interviewFeedback = await prisma.interviewFeedback.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends interviewFeedbackFindFirstOrThrowArgs>(args?: SelectSubset<T, interviewFeedbackFindFirstOrThrowArgs<ExtArgs>>): Prisma__interviewFeedbackClient<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InterviewFeedbacks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {interviewFeedbackFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InterviewFeedbacks
+     * const interviewFeedbacks = await prisma.interviewFeedback.findMany()
+     * 
+     * // Get first 10 InterviewFeedbacks
+     * const interviewFeedbacks = await prisma.interviewFeedback.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const interviewFeedbackWithIdOnly = await prisma.interviewFeedback.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends interviewFeedbackFindManyArgs>(args?: SelectSubset<T, interviewFeedbackFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InterviewFeedback.
+     * @param {interviewFeedbackCreateArgs} args - Arguments to create a InterviewFeedback.
+     * @example
+     * // Create one InterviewFeedback
+     * const InterviewFeedback = await prisma.interviewFeedback.create({
+     *   data: {
+     *     // ... data to create a InterviewFeedback
+     *   }
+     * })
+     * 
+     */
+    create<T extends interviewFeedbackCreateArgs>(args: SelectSubset<T, interviewFeedbackCreateArgs<ExtArgs>>): Prisma__interviewFeedbackClient<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InterviewFeedbacks.
+     * @param {interviewFeedbackCreateManyArgs} args - Arguments to create many InterviewFeedbacks.
+     * @example
+     * // Create many InterviewFeedbacks
+     * const interviewFeedback = await prisma.interviewFeedback.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends interviewFeedbackCreateManyArgs>(args?: SelectSubset<T, interviewFeedbackCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InterviewFeedbacks and returns the data saved in the database.
+     * @param {interviewFeedbackCreateManyAndReturnArgs} args - Arguments to create many InterviewFeedbacks.
+     * @example
+     * // Create many InterviewFeedbacks
+     * const interviewFeedback = await prisma.interviewFeedback.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InterviewFeedbacks and only return the `id`
+     * const interviewFeedbackWithIdOnly = await prisma.interviewFeedback.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends interviewFeedbackCreateManyAndReturnArgs>(args?: SelectSubset<T, interviewFeedbackCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InterviewFeedback.
+     * @param {interviewFeedbackDeleteArgs} args - Arguments to delete one InterviewFeedback.
+     * @example
+     * // Delete one InterviewFeedback
+     * const InterviewFeedback = await prisma.interviewFeedback.delete({
+     *   where: {
+     *     // ... filter to delete one InterviewFeedback
+     *   }
+     * })
+     * 
+     */
+    delete<T extends interviewFeedbackDeleteArgs>(args: SelectSubset<T, interviewFeedbackDeleteArgs<ExtArgs>>): Prisma__interviewFeedbackClient<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InterviewFeedback.
+     * @param {interviewFeedbackUpdateArgs} args - Arguments to update one InterviewFeedback.
+     * @example
+     * // Update one InterviewFeedback
+     * const interviewFeedback = await prisma.interviewFeedback.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends interviewFeedbackUpdateArgs>(args: SelectSubset<T, interviewFeedbackUpdateArgs<ExtArgs>>): Prisma__interviewFeedbackClient<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InterviewFeedbacks.
+     * @param {interviewFeedbackDeleteManyArgs} args - Arguments to filter InterviewFeedbacks to delete.
+     * @example
+     * // Delete a few InterviewFeedbacks
+     * const { count } = await prisma.interviewFeedback.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends interviewFeedbackDeleteManyArgs>(args?: SelectSubset<T, interviewFeedbackDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InterviewFeedbacks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {interviewFeedbackUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InterviewFeedbacks
+     * const interviewFeedback = await prisma.interviewFeedback.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends interviewFeedbackUpdateManyArgs>(args: SelectSubset<T, interviewFeedbackUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InterviewFeedbacks and returns the data updated in the database.
+     * @param {interviewFeedbackUpdateManyAndReturnArgs} args - Arguments to update many InterviewFeedbacks.
+     * @example
+     * // Update many InterviewFeedbacks
+     * const interviewFeedback = await prisma.interviewFeedback.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InterviewFeedbacks and only return the `id`
+     * const interviewFeedbackWithIdOnly = await prisma.interviewFeedback.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends interviewFeedbackUpdateManyAndReturnArgs>(args: SelectSubset<T, interviewFeedbackUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InterviewFeedback.
+     * @param {interviewFeedbackUpsertArgs} args - Arguments to update or create a InterviewFeedback.
+     * @example
+     * // Update or create a InterviewFeedback
+     * const interviewFeedback = await prisma.interviewFeedback.upsert({
+     *   create: {
+     *     // ... data to create a InterviewFeedback
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InterviewFeedback we want to update
+     *   }
+     * })
+     */
+    upsert<T extends interviewFeedbackUpsertArgs>(args: SelectSubset<T, interviewFeedbackUpsertArgs<ExtArgs>>): Prisma__interviewFeedbackClient<$Result.GetResult<Prisma.$interviewFeedbackPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InterviewFeedbacks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {interviewFeedbackCountArgs} args - Arguments to filter InterviewFeedbacks to count.
+     * @example
+     * // Count the number of InterviewFeedbacks
+     * const count = await prisma.interviewFeedback.count({
+     *   where: {
+     *     // ... the filter for the InterviewFeedbacks we want to count
+     *   }
+     * })
+    **/
+    count<T extends interviewFeedbackCountArgs>(
+      args?: Subset<T, interviewFeedbackCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InterviewFeedbackCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InterviewFeedback.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InterviewFeedbackAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InterviewFeedbackAggregateArgs>(args: Subset<T, InterviewFeedbackAggregateArgs>): Prisma.PrismaPromise<GetInterviewFeedbackAggregateType<T>>
+
+    /**
+     * Group by InterviewFeedback.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {interviewFeedbackGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends interviewFeedbackGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: interviewFeedbackGroupByArgs['orderBy'] }
+        : { orderBy?: interviewFeedbackGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, interviewFeedbackGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInterviewFeedbackGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the interviewFeedback model
+   */
+  readonly fields: interviewFeedbackFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for interviewFeedback.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__interviewFeedbackClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the interviewFeedback model
+   */
+  interface interviewFeedbackFieldRefs {
+    readonly id: FieldRef<"interviewFeedback", 'String'>
+    readonly created_at: FieldRef<"interviewFeedback", 'DateTime'>
+    readonly userName: FieldRef<"interviewFeedback", 'String'>
+    readonly userEmail: FieldRef<"interviewFeedback", 'String'>
+    readonly interview_id: FieldRef<"interviewFeedback", 'String'>
+    readonly feedback: FieldRef<"interviewFeedback", 'Json'>
+    readonly recommended: FieldRef<"interviewFeedback", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * interviewFeedback findUnique
+   */
+  export type interviewFeedbackFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * Filter, which interviewFeedback to fetch.
+     */
+    where: interviewFeedbackWhereUniqueInput
+  }
+
+  /**
+   * interviewFeedback findUniqueOrThrow
+   */
+  export type interviewFeedbackFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * Filter, which interviewFeedback to fetch.
+     */
+    where: interviewFeedbackWhereUniqueInput
+  }
+
+  /**
+   * interviewFeedback findFirst
+   */
+  export type interviewFeedbackFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * Filter, which interviewFeedback to fetch.
+     */
+    where?: interviewFeedbackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of interviewFeedbacks to fetch.
+     */
+    orderBy?: interviewFeedbackOrderByWithRelationInput | interviewFeedbackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for interviewFeedbacks.
+     */
+    cursor?: interviewFeedbackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` interviewFeedbacks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` interviewFeedbacks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of interviewFeedbacks.
+     */
+    distinct?: InterviewFeedbackScalarFieldEnum | InterviewFeedbackScalarFieldEnum[]
+  }
+
+  /**
+   * interviewFeedback findFirstOrThrow
+   */
+  export type interviewFeedbackFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * Filter, which interviewFeedback to fetch.
+     */
+    where?: interviewFeedbackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of interviewFeedbacks to fetch.
+     */
+    orderBy?: interviewFeedbackOrderByWithRelationInput | interviewFeedbackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for interviewFeedbacks.
+     */
+    cursor?: interviewFeedbackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` interviewFeedbacks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` interviewFeedbacks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of interviewFeedbacks.
+     */
+    distinct?: InterviewFeedbackScalarFieldEnum | InterviewFeedbackScalarFieldEnum[]
+  }
+
+  /**
+   * interviewFeedback findMany
+   */
+  export type interviewFeedbackFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * Filter, which interviewFeedbacks to fetch.
+     */
+    where?: interviewFeedbackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of interviewFeedbacks to fetch.
+     */
+    orderBy?: interviewFeedbackOrderByWithRelationInput | interviewFeedbackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing interviewFeedbacks.
+     */
+    cursor?: interviewFeedbackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` interviewFeedbacks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` interviewFeedbacks.
+     */
+    skip?: number
+    distinct?: InterviewFeedbackScalarFieldEnum | InterviewFeedbackScalarFieldEnum[]
+  }
+
+  /**
+   * interviewFeedback create
+   */
+  export type interviewFeedbackCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * The data needed to create a interviewFeedback.
+     */
+    data: XOR<interviewFeedbackCreateInput, interviewFeedbackUncheckedCreateInput>
+  }
+
+  /**
+   * interviewFeedback createMany
+   */
+  export type interviewFeedbackCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many interviewFeedbacks.
+     */
+    data: interviewFeedbackCreateManyInput | interviewFeedbackCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * interviewFeedback createManyAndReturn
+   */
+  export type interviewFeedbackCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * The data used to create many interviewFeedbacks.
+     */
+    data: interviewFeedbackCreateManyInput | interviewFeedbackCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * interviewFeedback update
+   */
+  export type interviewFeedbackUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * The data needed to update a interviewFeedback.
+     */
+    data: XOR<interviewFeedbackUpdateInput, interviewFeedbackUncheckedUpdateInput>
+    /**
+     * Choose, which interviewFeedback to update.
+     */
+    where: interviewFeedbackWhereUniqueInput
+  }
+
+  /**
+   * interviewFeedback updateMany
+   */
+  export type interviewFeedbackUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update interviewFeedbacks.
+     */
+    data: XOR<interviewFeedbackUpdateManyMutationInput, interviewFeedbackUncheckedUpdateManyInput>
+    /**
+     * Filter which interviewFeedbacks to update
+     */
+    where?: interviewFeedbackWhereInput
+    /**
+     * Limit how many interviewFeedbacks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * interviewFeedback updateManyAndReturn
+   */
+  export type interviewFeedbackUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * The data used to update interviewFeedbacks.
+     */
+    data: XOR<interviewFeedbackUpdateManyMutationInput, interviewFeedbackUncheckedUpdateManyInput>
+    /**
+     * Filter which interviewFeedbacks to update
+     */
+    where?: interviewFeedbackWhereInput
+    /**
+     * Limit how many interviewFeedbacks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * interviewFeedback upsert
+   */
+  export type interviewFeedbackUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * The filter to search for the interviewFeedback to update in case it exists.
+     */
+    where: interviewFeedbackWhereUniqueInput
+    /**
+     * In case the interviewFeedback found by the `where` argument doesn't exist, create a new interviewFeedback with this data.
+     */
+    create: XOR<interviewFeedbackCreateInput, interviewFeedbackUncheckedCreateInput>
+    /**
+     * In case the interviewFeedback was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<interviewFeedbackUpdateInput, interviewFeedbackUncheckedUpdateInput>
+  }
+
+  /**
+   * interviewFeedback delete
+   */
+  export type interviewFeedbackDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+    /**
+     * Filter which interviewFeedback to delete.
+     */
+    where: interviewFeedbackWhereUniqueInput
+  }
+
+  /**
+   * interviewFeedback deleteMany
+   */
+  export type interviewFeedbackDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which interviewFeedbacks to delete
+     */
+    where?: interviewFeedbackWhereInput
+    /**
+     * Limit how many interviewFeedbacks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * interviewFeedback without action
+   */
+  export type interviewFeedbackDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the interviewFeedback
+     */
+    select?: interviewFeedbackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the interviewFeedback
+     */
+    omit?: interviewFeedbackOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -1922,6 +3029,19 @@ export namespace Prisma {
   };
 
   export type InterviewScalarFieldEnum = (typeof InterviewScalarFieldEnum)[keyof typeof InterviewScalarFieldEnum]
+
+
+  export const InterviewFeedbackScalarFieldEnum: {
+    id: 'id',
+    created_at: 'created_at',
+    userName: 'userName',
+    userEmail: 'userEmail',
+    interview_id: 'interview_id',
+    feedback: 'feedback',
+    recommended: 'recommended'
+  };
+
+  export type InterviewFeedbackScalarFieldEnum = (typeof InterviewFeedbackScalarFieldEnum)[keyof typeof InterviewFeedbackScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -2000,6 +3120,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -2087,6 +3214,68 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Interview"> | Date | string
   }
 
+  export type interviewFeedbackWhereInput = {
+    AND?: interviewFeedbackWhereInput | interviewFeedbackWhereInput[]
+    OR?: interviewFeedbackWhereInput[]
+    NOT?: interviewFeedbackWhereInput | interviewFeedbackWhereInput[]
+    id?: StringFilter<"interviewFeedback"> | string
+    created_at?: DateTimeFilter<"interviewFeedback"> | Date | string
+    userName?: StringFilter<"interviewFeedback"> | string
+    userEmail?: StringFilter<"interviewFeedback"> | string
+    interview_id?: StringFilter<"interviewFeedback"> | string
+    feedback?: JsonFilter<"interviewFeedback">
+    recommended?: BoolFilter<"interviewFeedback"> | boolean
+  }
+
+  export type interviewFeedbackOrderByWithRelationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    userName?: SortOrder
+    userEmail?: SortOrder
+    interview_id?: SortOrder
+    feedback?: SortOrder
+    recommended?: SortOrder
+  }
+
+  export type interviewFeedbackWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    interview_id?: string
+    AND?: interviewFeedbackWhereInput | interviewFeedbackWhereInput[]
+    OR?: interviewFeedbackWhereInput[]
+    NOT?: interviewFeedbackWhereInput | interviewFeedbackWhereInput[]
+    created_at?: DateTimeFilter<"interviewFeedback"> | Date | string
+    userName?: StringFilter<"interviewFeedback"> | string
+    userEmail?: StringFilter<"interviewFeedback"> | string
+    feedback?: JsonFilter<"interviewFeedback">
+    recommended?: BoolFilter<"interviewFeedback"> | boolean
+  }, "id" | "interview_id">
+
+  export type interviewFeedbackOrderByWithAggregationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    userName?: SortOrder
+    userEmail?: SortOrder
+    interview_id?: SortOrder
+    feedback?: SortOrder
+    recommended?: SortOrder
+    _count?: interviewFeedbackCountOrderByAggregateInput
+    _max?: interviewFeedbackMaxOrderByAggregateInput
+    _min?: interviewFeedbackMinOrderByAggregateInput
+  }
+
+  export type interviewFeedbackScalarWhereWithAggregatesInput = {
+    AND?: interviewFeedbackScalarWhereWithAggregatesInput | interviewFeedbackScalarWhereWithAggregatesInput[]
+    OR?: interviewFeedbackScalarWhereWithAggregatesInput[]
+    NOT?: interviewFeedbackScalarWhereWithAggregatesInput | interviewFeedbackScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"interviewFeedback"> | string
+    created_at?: DateTimeWithAggregatesFilter<"interviewFeedback"> | Date | string
+    userName?: StringWithAggregatesFilter<"interviewFeedback"> | string
+    userEmail?: StringWithAggregatesFilter<"interviewFeedback"> | string
+    interview_id?: StringWithAggregatesFilter<"interviewFeedback"> | string
+    feedback?: JsonWithAggregatesFilter<"interviewFeedback">
+    recommended?: BoolWithAggregatesFilter<"interviewFeedback"> | boolean
+  }
+
   export type InterviewCreateInput = {
     id?: string
     interview_id: string
@@ -2162,6 +3351,76 @@ export namespace Prisma {
     type?: InterviewUpdatetypeInput | string[]
     question_list?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type interviewFeedbackCreateInput = {
+    id?: string
+    created_at?: Date | string
+    userName: string
+    userEmail: string
+    interview_id: string
+    feedback: JsonNullValueInput | InputJsonValue
+    recommended: boolean
+  }
+
+  export type interviewFeedbackUncheckedCreateInput = {
+    id?: string
+    created_at?: Date | string
+    userName: string
+    userEmail: string
+    interview_id: string
+    feedback: JsonNullValueInput | InputJsonValue
+    recommended: boolean
+  }
+
+  export type interviewFeedbackUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    userName?: StringFieldUpdateOperationsInput | string
+    userEmail?: StringFieldUpdateOperationsInput | string
+    interview_id?: StringFieldUpdateOperationsInput | string
+    feedback?: JsonNullValueInput | InputJsonValue
+    recommended?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type interviewFeedbackUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    userName?: StringFieldUpdateOperationsInput | string
+    userEmail?: StringFieldUpdateOperationsInput | string
+    interview_id?: StringFieldUpdateOperationsInput | string
+    feedback?: JsonNullValueInput | InputJsonValue
+    recommended?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type interviewFeedbackCreateManyInput = {
+    id?: string
+    created_at?: Date | string
+    userName: string
+    userEmail: string
+    interview_id: string
+    feedback: JsonNullValueInput | InputJsonValue
+    recommended: boolean
+  }
+
+  export type interviewFeedbackUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    userName?: StringFieldUpdateOperationsInput | string
+    userEmail?: StringFieldUpdateOperationsInput | string
+    interview_id?: StringFieldUpdateOperationsInput | string
+    feedback?: JsonNullValueInput | InputJsonValue
+    recommended?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type interviewFeedbackUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    userName?: StringFieldUpdateOperationsInput | string
+    userEmail?: StringFieldUpdateOperationsInput | string
+    interview_id?: StringFieldUpdateOperationsInput | string
+    feedback?: JsonNullValueInput | InputJsonValue
+    recommended?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2308,6 +3567,47 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type interviewFeedbackCountOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    userName?: SortOrder
+    userEmail?: SortOrder
+    interview_id?: SortOrder
+    feedback?: SortOrder
+    recommended?: SortOrder
+  }
+
+  export type interviewFeedbackMaxOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    userName?: SortOrder
+    userEmail?: SortOrder
+    interview_id?: SortOrder
+    recommended?: SortOrder
+  }
+
+  export type interviewFeedbackMinOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    userName?: SortOrder
+    userEmail?: SortOrder
+    interview_id?: SortOrder
+    recommended?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type InterviewCreatetypeInput = {
     set: string[]
   }
@@ -2323,6 +3623,10 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2413,6 +3717,19 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
 

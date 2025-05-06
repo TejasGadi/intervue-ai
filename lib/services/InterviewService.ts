@@ -5,4 +5,5 @@ export class InterviewService {
     static async saveFeedback(data : FeedbackDto){
         return prisma.interviewFeedback.create({data})
     }
+    
 }

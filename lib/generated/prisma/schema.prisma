@@ -25,3 +25,13 @@ model Interview {
   question_list     Json
   createdAt         DateTime @default(now())
 }
+
+model interviewFeedback {
+  id           String   @id @default(uuid())
+  created_at   DateTime @default(now())
+  userName     String
+  userEmail    String
+  interview_id String   @unique
+  feedback     Json
+  recommended  Boolean
+}
